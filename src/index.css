@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cinzel:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-elegant-300;
+  }
+  
+  body {
+    @apply font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-accent-gradient text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 shadow-lg;
+  }
+  
+  .btn-secondary {
+    @apply border border-elegant-300 text-elegant-700 hover:bg-elegant-50 hover:border-accent-400 px-6 py-3 rounded-xl font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-elegant-400 focus:ring-offset-2 backdrop-blur-sm;
+  }
+  
+  .card-elegant {
+    @apply bg-white/80 backdrop-blur-sm shadow-xl hover:shadow-2xl rounded-2xl transition-all duration-500 border border-elegant-200/60 hover:border-elegant-300/80;
+  }
+  
+  .card-premium {
+    @apply bg-gradient-to-br from-white to-elegant-50/50 shadow-2xl hover:shadow-elegant-500/20 rounded-3xl transition-all duration-500 border border-elegant-200/80 hover:border-accent-300/60 backdrop-blur-xl;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent-600 via-accent-700 to-brown-600 bg-clip-text text-transparent;
+  }
+  
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl;
+  }
+  
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+  
+  /* Previne o problema de cards desaparecendo */
+  .card-premium, .card-elegant {
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+  }
+  
+  /* Melhora a performance das animações */
+  .motion-safe {
+    @apply transform-gpu;
+  }
+}
