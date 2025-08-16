@@ -173,12 +173,22 @@ const Testimonials: React.FC = () => {
 
           {/* Mobile: Carrossel */}
           <div 
-            className="md:hidden relative overflow-hidden pb-4"
+            className="md:hidden relative overflow-hidden pb-4 touch-pan-x"
+            style={{ touchAction: 'pan-x' }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              handleTouchStart(e);
+            }}
+            onTouchMove={(e) => {
+              e.preventDefault();
+              handleTouchMove(e);
+            }}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              handleTouchEnd();
+            }}
           >
             <div 
               className="flex transition-transform duration-500 ease-in-out"

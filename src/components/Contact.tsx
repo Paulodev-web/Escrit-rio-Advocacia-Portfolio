@@ -13,6 +13,7 @@ interface FormData {
 const Contact: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
@@ -195,7 +196,28 @@ const Contact: React.FC = () => {
             {/* Mobile Carousel */}
             <div className="sm:hidden">
               <div className="relative pb-4">
-                <div className="overflow-hidden rounded-2xl">
+                <div 
+                  className="overflow-hidden rounded-2xl touch-pan-x"
+                  style={{ touchAction: 'pan-x' }}
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    setTouchStart(touch.clientX);
+                  }}
+                  onTouchMove={(e) => {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const diff = touchStart - touch.clientX;
+                    if (Math.abs(diff) > 50) {
+                      if (diff > 0) {
+                        setCurrentCardIndex((prev) => (prev + 1) % contactInfo.length);
+                      } else {
+                        setCurrentCardIndex((prev) => (prev - 1 + contactInfo.length) % contactInfo.length);
+                      }
+                      setTouchStart(touch.clientX);
+                    }
+                  }}
+                >
                   <div
                     className="flex transition-transform duration-300 ease-out"
                     style={{ transform: `translateX(-${currentCardIndex * 100}%)` }}

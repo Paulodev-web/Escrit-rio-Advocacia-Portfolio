@@ -86,34 +86,64 @@ const PracticeAreas: React.FC = () => {
           {areas.map((area, index) => (
             <motion.div
               key={index}
-              className="card-premium group p-5 sm:p-6 lg:p-7 hover-lift"
-              initial={{ opacity: 0, y: 30 }}
+              className="card-premium group p-5 sm:p-6 lg:p-7 hover-lift will-change-transform"
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true, margin: "-10%" }}
-              style={{ minHeight: "280px" }}
+              transition={{ 
+                duration: 0.4,
+                delay: index * 0.05,
+                ease: [0.25, 0.1, 0.25, 1],
+                opacity: { duration: 0.3 }
+              }}
+              viewport={{ once: true, margin: "-5%" }}
+              style={{ 
+                minHeight: "280px",
+                backfaceVisibility: "hidden",
+                WebkitFontSmoothing: "antialiased"
+              }}
             >
               <div className="relative mb-4 sm:mb-5 lg:mb-6">
-                <div className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 ${area.color} rounded-2xl flex items-center justify-center text-white shadow-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
-                  <div className="scale-75 sm:scale-90 lg:scale-100">
+                <div 
+                  className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 ${area.color} rounded-2xl flex items-center justify-center text-white shadow-xl transform-gpu transition-transform duration-300 ease-out will-change-transform group-hover:scale-105`}
+                  style={{ transformStyle: 'preserve-3d' }}
+                >
+                  <div className="scale-75 sm:scale-90 lg:scale-100 transition-transform duration-200">
                     {area.icon}
                   </div>
                 </div>
-                <div className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-accent-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div 
+                  className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-accent-200 rounded-full transform-gpu opacity-0 group-hover:opacity-100 transition-all duration-200 ease-out"
+                  style={{ willChange: 'opacity, transform' }}
+                ></div>
               </div>
               
-              <h3 className="text-lg sm:text-xl font-bold text-brown-800 mb-2 sm:mb-3 group-hover:text-accent-700 transition-colors font-display leading-tight">
+              <h3 
+                className="text-lg sm:text-xl font-bold text-brown-800 mb-2 sm:mb-3 group-hover:text-accent-700 transition-colors duration-200 font-display leading-tight"
+                style={{ WebkitFontSmoothing: 'antialiased' }}
+              >
                 {area.title}
               </h3>
               
-              <p className="text-brown-600 leading-relaxed text-sm sm:text-base mb-4 sm:mb-5">
+              <p 
+                className="text-brown-600 leading-relaxed text-sm sm:text-base mb-4 sm:mb-5"
+                style={{ WebkitFontSmoothing: 'antialiased' }}
+              >
                 {area.description}
               </p>
               
               <div className="pt-3 sm:pt-4 border-t border-elegant-200/60">
-                <button className="text-accent-600 hover:text-accent-800 font-medium text-sm flex items-center space-x-2 group-hover:translate-x-1 transition-all duration-300">
+                <button 
+                  className="text-accent-600 hover:text-accent-800 font-medium text-sm flex items-center space-x-2 transform-gpu transition-all duration-200 ease-out"
+                  style={{ willChange: 'transform, color' }}
+                >
                   <span>Saiba mais</span>
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg 
+                    className="w-4 h-4 transform-gpu transition-transform duration-200 ease-out group-hover:translate-x-1"
+                    style={{ willChange: 'transform' }}
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </button>
