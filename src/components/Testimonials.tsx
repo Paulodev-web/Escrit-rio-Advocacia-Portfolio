@@ -86,17 +86,42 @@ const Testimonials: React.FC = () => {
   // Suporte a gestos de toque
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  const [touchStartY, setTouchStartY] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
+    setTouchStartY(e.targetTouches[0].clientY);
+    setIsDragging(false);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
+    if (!touchStart) return;
+    
+    const currentX = e.targetTouches[0].clientX;
+    const currentY = e.targetTouches[0].clientY;
+    const deltaX = Math.abs(touchStart - currentX);
+    const deltaY = Math.abs(touchStartY - currentY);
+    
+    // Se o movimento horizontal é maior que o vertical, previne o scroll da página
+    if (deltaX > deltaY && deltaX > 10) {
+      e.preventDefault();
+      setIsDragging(true);
+    }
+    
+    setTouchEnd(currentX);
   };
 
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStart || !touchEnd || !isDragging) {
+      setTouchStart(0);
+      setTouchEnd(0);
+      setTouchStartY(0);
+      setIsDragging(false);
+      return;
+    }
+    
+    e.preventDefault();
     
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > 50;
@@ -108,6 +133,12 @@ const Testimonials: React.FC = () => {
     if (isRightSwipe) {
       prevSlide();
     }
+    
+    // Reset valores
+    setTouchStart(0);
+    setTouchEnd(0);
+    setTouchStartY(0);
+    setIsDragging(false);
   };
 
   return (
@@ -136,11 +167,15 @@ const Testimonials: React.FC = () => {
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
-                className="card-premium p-5 sm:p-6 lg:p-7 hover-lift group"
+                className="card-premium p-5 sm:p-6 lg:p-7 hover-lift group animation-optimized no-flicker"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.08, ease: "easeOut" }}
+                viewport={{ once: true, amount: 0.1 }}
+                style={{
+                  transform: "translateZ(0)",
+                  willChange: "transform, opacity"
+                }}
               >
                 <div className="flex items-center mb-3 sm:mb-4">
                   <Quote className="text-accent-300 group-hover:text-accent-400 transition-colors duration-300" size={32} />
@@ -173,36 +208,33 @@ const Testimonials: React.FC = () => {
 
           {/* Mobile: Carrossel */}
           <div 
-            className="md:hidden relative overflow-hidden pb-4 touch-pan-x"
-            style={{ touchAction: 'pan-x' }}
+            className="md:hidden relative overflow-hidden pb-4 carousel-container"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            onTouchStart={(e) => {
-              e.preventDefault();
-              handleTouchStart(e);
-            }}
-            onTouchMove={(e) => {
-              e.preventDefault();
-              handleTouchMove(e);
-            }}
-            onTouchEnd={(e) => {
-              e.preventDefault();
-              handleTouchEnd();
-            }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             <div 
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              className="flex transition-transform duration-500 ease-in-out animation-optimized"
+              style={{ 
+                transform: `translateX(-${currentIndex * 100}%)`,
+                willChange: 'transform'
+              }}
             >
               {testimonials.map((testimonial, index) => (
                 <div key={index} className="w-full flex-shrink-0 px-4">
                   <motion.div
-                    className="card-premium p-6 group h-full mx-2"
+                    className="card-premium p-6 group h-full mx-2 no-flicker"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    style={{ minHeight: "300px" }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    style={{ 
+                      minHeight: "300px",
+                      transform: "translateZ(0)",
+                      willChange: "transform, opacity"
+                    }}
                   >
                     <div className="flex items-center mb-3 sm:mb-4">
                       <Quote className="text-accent-300 group-hover:text-accent-400 transition-colors duration-300" size={28} />

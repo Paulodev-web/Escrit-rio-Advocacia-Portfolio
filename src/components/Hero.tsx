@@ -27,24 +27,33 @@ const Hero: React.FC = () => {
             
             {/* Logo Central */}
             <motion.div
-              className="mb-8"
+              className="mb-8 animation-optimized no-flicker"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              style={{ 
+                transform: "translateZ(0)",
+                willChange: "transform, opacity"
+              }}
             >
               <img 
                 src="/logosemfundo.png" 
                 alt="Escritório de Advocacia" 
                 className="w-48 h-48 md:w-64 md:h-64 mx-auto object-contain"
+                style={{ transform: "translateZ(0)" }}
               />
             </motion.div>
             
             {/* Main Title */}
             <motion.h1
-              className="text-4xl md:text-6xl lg:text-7xl font-bold text-brown-800 mb-6 leading-tight font-display tracking-wider"
+              className="text-4xl md:text-6xl lg:text-7xl font-bold text-brown-800 mb-6 leading-tight font-display tracking-wider no-flicker"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              style={{ 
+                transform: "translateZ(0)",
+                willChange: "transform, opacity"
+              }}
             >
               ESCRITÓRIO DE
               <span className="block text-accent-600 mt-2">ADVOCACIA</span>
@@ -52,10 +61,14 @@ const Hero: React.FC = () => {
             
             {/* Subtitle */}
             <motion.p
-              className="text-xl md:text-2xl text-brown-700 mb-10 max-w-3xl mx-auto leading-relaxed font-serif"
+              className="text-xl md:text-2xl text-brown-700 mb-10 max-w-3xl mx-auto leading-relaxed font-serif no-flicker"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              style={{ 
+                transform: "translateZ(0)",
+                willChange: "transform, opacity"
+              }}
             >
               Mais de 20 anos de experiência oferecendo soluções jurídicas personalizadas 
               com ética, compromisso e resultados comprovados.
@@ -63,10 +76,14 @@ const Hero: React.FC = () => {
 
             {/* Action Buttons */}
             <motion.div
-              className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 no-flicker"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+              style={{ 
+                transform: "translateZ(0)",
+                willChange: "transform, opacity"
+              }}
             >
               {/* Primary Button */}
               <button

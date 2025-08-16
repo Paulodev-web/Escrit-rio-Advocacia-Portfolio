@@ -51,10 +51,45 @@
   .card-premium, .card-elegant {
     backface-visibility: hidden;
     will-change: transform, opacity;
+    -webkit-backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translateZ(0);
   }
   
   /* Melhora a performance das animações */
   .motion-safe {
     @apply transform-gpu;
+  }
+
+  /* Previne scroll em elementos touch */
+  .prevent-scroll {
+    touch-action: pan-x pinch-zoom;
+    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
+  }
+
+  .carousel-container {
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: none;
+  }
+
+  /* Melhora performance de animações */
+  .animation-optimized {
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+
+  /* Previne piscar durante animações */
+  .no-flicker {
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    -webkit-font-smoothing: subpixel-antialiased;
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
 }

@@ -86,20 +86,20 @@ const PracticeAreas: React.FC = () => {
           {areas.map((area, index) => (
             <motion.div
               key={index}
-              className="card-premium group p-5 sm:p-6 lg:p-7 hover-lift will-change-transform"
+              className="card-premium group p-5 sm:p-6 lg:p-7 hover-lift animation-optimized no-flicker"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ 
-                duration: 0.4,
-                delay: index * 0.05,
-                ease: [0.25, 0.1, 0.25, 1],
-                opacity: { duration: 0.3 }
+                duration: 0.6,
+                delay: index * 0.08,
+                ease: "easeOut",
+                opacity: { duration: 0.6 }
               }}
-              viewport={{ once: true, margin: "-5%" }}
+              viewport={{ once: true, amount: 0.1 }}
               style={{ 
                 minHeight: "280px",
-                backfaceVisibility: "hidden",
-                WebkitFontSmoothing: "antialiased"
+                transform: "translateZ(0)",
+                willChange: "transform, opacity"
               }}
             >
               <div className="relative mb-4 sm:mb-5 lg:mb-6">
